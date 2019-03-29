@@ -5,6 +5,7 @@ let matter = require('gray-matter');
 let extend = require('util')._extend;
 let fsi = require('fs-filesysteminfo');
 let path = require('path');
+const mkdirp = require('mkdirp');
 
 class FrontMatterService {
   constructor() {
@@ -14,11 +15,24 @@ class FrontMatterService {
     console.log(JSON.stringify(obj, null, 2));
   }
 
+  create(filePath) {
+    let directoryName = path.dirname(filePath);
+    mkdirp.sync(directoryName);
+    fs.writeFileSync(filePath);
+    return this.read(filePath);
+  }
+
   read(filePath) {
     // this.sourcePath = filePath;
     this.file = fs.readFileSync(filePath);
     this.fileSystemInfo = new fsi.FileSystemInfo(filePath);
     this.matter = matter(String(this.file));
+
+    if (this.matter.orig === 'undefined') {
+      this.matter.orig = '';
+      this.matter.content = '';
+    }
+
     return this;
   }
 

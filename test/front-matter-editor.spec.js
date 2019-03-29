@@ -3,6 +3,8 @@
 const editor = require('../index');
 const path = require('path');
 const extend = require('util')._extend;
+const assert = require('assert');
+const fs = require('fs');
 
 describe('FrontMatterEditor tests', () =>{
   let filePath = path.join(__dirname, 'sample.md');
@@ -64,4 +66,17 @@ describe('FrontMatterEditor tests', () =>{
       });
   })
 
+  it("Creates a new file containing frontmatter and markdown", done => {
+    let filePath = './output/newFile.md';
+    let content = `---\nauthor: saltfactory\n---\nHello World!\n`;
+
+    editor.create(filePath)
+      .data((data, matter) => matter.data.author = "saltfactory")
+      .content((content, matter) => matter.content = "Hello World!")
+      .save(path.join('./output'), null, (err, matter) => {
+        assert.ok(fs.existsSync(filePath));
+        assert.equal(content, String(fs.readFileSync(filePath)));
+        done();
+      });
+  })
 });
