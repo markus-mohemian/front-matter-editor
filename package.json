@@ -1,10 +1,10 @@
 {
   "name": "front-matter-editor",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "front-matter-editor help you to edit front-matter in markdown file ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -27,10 +27,11 @@
     "fs-filesysteminfo": "^1.0.6",
     "gray-matter": "^2.0.2",
     "k-gun-execsync": "^1.0.5",
-    "k-gun-fileinfo": "^1.0.2"
+    "k-gun-fileinfo": "^1.0.2",
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.0.0"
+    "mocha": "^3.5.3"
   }
 }
